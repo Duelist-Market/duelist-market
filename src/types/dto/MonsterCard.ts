@@ -1,6 +1,9 @@
 import Card, { CardConstructorArguments } from "./Card";
 
-export type MonsterCardConstructorArguments = CardConstructorArguments & {
+export type MonsterCardConstructorArguments = Omit<
+  CardConstructorArguments,
+  "type"
+> & {
   attack: number;
   defense: number;
   level: number;
@@ -30,7 +33,15 @@ export default class MonsterCard extends Card {
       subTypes,
     } = args;
 
-    super({ id, name, description, attribute, fullImageUrl, smallImageUrl });
+    super({
+      id,
+      name,
+      type: "monster",
+      description,
+      attribute,
+      fullImageUrl,
+      smallImageUrl,
+    });
     this.attack = attack;
     this.defense = defense;
     this.level = level;

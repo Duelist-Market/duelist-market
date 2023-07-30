@@ -8,21 +8,57 @@ interface CardProps {
   card: Card;
 }
 
+const frameColors = {
+  monster: {
+    normal: "bg-yellow-300/50",
+    effect: "bg-amber-900/50",
+    ritual: "bg-blue-300/50",
+    fusion: "bg-purple-300/50",
+    xyz: "bg-black",
+    synchro: "bg-white",
+    link: "bg-blue-600/50",
+  },
+};
+
 export default function CardDetail(props: CardProps) {
+  let bgColor = "";
+  let fontColor = "text-white";
+  let attributeImage = "";
+  let attributeAlt = "";
+  let subTypes: string[] = [];
+
+  if (props.card.type === "monster") {
+    const monsterCard = props.card as MonsterCard;
+    attributeImage = `https://duelistmarketimages.s3.amazonaws.com/attributes/${monsterCard.attribute}.png`;
+    attributeAlt = `${monsterCard.attribute} attribute.`;
+    subTypes = monsterCard.subTypes;
+    if (subTypes.includes("normal")) {
+      bgColor = frameColors.monster.normal;
+    } else if (subTypes.includes("fusion")) {
+      bgColor = frameColors.monster.fusion;
+    } else if (subTypes.includes("ritual")) {
+      bgColor = frameColors.monster.ritual;
+    } else if (subTypes.includes("synchro")) {
+      bgColor = frameColors.monster.synchro;
+      fontColor = "text-black";
+    } else if (subTypes.includes("xyz")) {
+      bgColor = frameColors.monster.xyz;
+    } else if (subTypes.includes("link")) {
+      bgColor = frameColors.monster.link;
+    } else {
+      bgColor = frameColors.monster.effect;
+    }
+  }
+
   return (
     <div className="flex flex-col max-h-full overflow-hidden">
-      <div className="w-full py-2 flex bg-yellow-300/50 px-2 justify-between">
-        <h1 className="font-bold text-white block font-sans">
-          {props.card.name}
-        </h1>
-        <Image
-          className="block"
-          src={`https://duelistmarketimages.s3.amazonaws.com/attributes/${props.card.attribute}.png`}
-          alt={`${props.card.attribute} attribute`}
-          width={25}
-          height={25}
-        />
-      </div>
+      <Name
+        name={props.card.name}
+        fontColor={fontColor}
+        bgColor={bgColor}
+        attributeImage={attributeImage}
+        attributeAlt={attributeAlt}
+      />
       <div className="flex w-full p-4">
         <div className="flex-1">
           <Image
@@ -69,20 +105,53 @@ export default function CardDetail(props: CardProps) {
           </div>
         </div>
       </div>
-      <div className="w-full py-2 flex bg-yellow-300/50 px-2 justify-between">
-        <h1 className="font-bold text-white block font-sans">
-          [
-          {(props.card as MonsterCard).subTypes
-            .map((type) => type.charAt(0).toUpperCase() + type.slice(1))
-            .join("/")}
-          ]
-        </h1>
-      </div>
-      <div className="overflow-y-scroll no-scroll-bar">
+      <SubTypes subTypes={subTypes} bgColor={bgColor} fontColor={fontColor} />
+      <div className="overflow-y-scroll no-scrollbar">
         <p className="text-white p-4 whitespace-pre-wrap font-sans">
           {props.card.description.replace(/\"\"/g, '"')}
         </p>
       </div>
+    </div>
+  );
+}
+
+function Name(props: {
+  name: string;
+  fontColor: string;
+  bgColor: string;
+  attributeImage: string;
+  attributeAlt: string;
+}) {
+  return (
+    <div className={`w-full py-2 flex ${props.bgColor} px-2 justify-between`}>
+      <h1 className={`font-bold ${props.fontColor} block font-sans`}>
+        {props.name}
+      </h1>
+      <Image
+        className="block"
+        src={props.attributeImage}
+        alt={props.attributeAlt}
+        width={25}
+        height={25}
+      />
+    </div>
+  );
+}
+
+function SubTypes(props: {
+  subTypes: string[];
+  bgColor: string;
+  fontColor: string;
+}) {
+  return (
+    <div className={`w-full py-2 flex ${props.bgColor} px-2 justify-between`}>
+      <h1 className={`font-bold ${props.fontColor} block font-sans`}>
+        [
+        {props.subTypes
+          .map((type) => type.charAt(0).toUpperCase() + type.slice(1))
+          .join("/")}
+        ]
+      </h1>
     </div>
   );
 }

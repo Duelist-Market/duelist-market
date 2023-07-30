@@ -15,7 +15,7 @@ const blackOpsOne = Black_Ops_One({
   weight: "400",
 });
 
-const sampleMonster: MonsterCard = {
+const sampleMonster = new MonsterCard({
   id: 6511113,
   name: "Traptrix Rafflesia",
   description: `2 Level 4 monsters\nThis card is unaffected by Trap effects while it has Xyz Material. ""Traptrix"" monsters you control, except ""Traptrix Rafflesia"", cannot be destroyed by battle or card effects. Your opponent cannot target ""Traptrix"" monsters you control, except ""Traptrix Rafflesia"", with card effects. Once per turn, during either player's turn: You can detach 1 Xyz Material from this card and send 1 ""Hole"" Normal Trap Card that meets its activation conditions from your Deck to the Graveyard; this effect becomes that Trap Card's effect when that card is activated.`,
@@ -29,7 +29,7 @@ const sampleMonster: MonsterCard = {
   smallImageUrl:
     "https://duelistmarketimages.s3.amazonaws.com/card_images/small/6511113.jpg",
   subTypes: ["xyz", "effect"],
-};
+});
 
 export default function Home() {
   return (
