@@ -48,6 +48,11 @@ export default function CardDetail(props: CardProps) {
     } else {
       bgColor = frameColors.monster.effect;
     }
+  } else if (props.card.type === "spell") {
+    bgColor = "bg-green-600/50";
+    attributeImage = `https://duelistmarketimages.s3.amazonaws.com/attributes/spell.svg`;
+    attributeAlt = `Spell card.`;
+    subTypes = ["Spell Card"];
   }
 
   return (
@@ -69,40 +74,7 @@ export default function CardDetail(props: CardProps) {
           />
         </div>
         <div className="flex-1 flex flex-col">
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <Image
-                className="block mr-1"
-                src={`https://duelistmarketimages.s3.amazonaws.com/star.png`}
-                alt={`Level`}
-                width={20}
-                height={20}
-              />
-              <div className="font-bold text-xl font-mono">
-                {(props.card as MonsterCard).level || null}
-              </div>
-            </div>
-            <Image
-              src={`https://duelistmarketimages.s3.amazonaws.com/types/${
-                (props.card as MonsterCard).monsterType
-              }.webp`}
-              alt={`${(props.card as MonsterCard).monsterType} type monster.`}
-              width={40}
-              height={40}
-            />
-          </div>
-          <div className="flex justify-between">
-            <FontAwesomeIcon icon={faSwords} width={25} height={25} />
-            <div className="font-bold text-xl font-mono">
-              {(props.card as MonsterCard).attack || null}
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <FontAwesomeIcon icon={faShield} width={25} height={25} />
-            <div className="font-bold text-xl font-mono">
-              {(props.card as MonsterCard).defense || null}
-            </div>
-          </div>
+          <CardInfo card={props.card} />
         </div>
       </div>
       <SubTypes subTypes={subTypes} bgColor={bgColor} fontColor={fontColor} />
@@ -153,5 +125,48 @@ function SubTypes(props: {
         ]
       </h1>
     </div>
+  );
+}
+
+function CardInfo(props: { card: Card }) {
+  return (
+    <div className="flex-1 flex flex-col">
+      {props.card.type === "monster" ? (
+        <MonsterCardInfo card={props.card as MonsterCard} />
+      ) : null}
+    </div>
+  );
+}
+
+function MonsterCardInfo(props: { card: MonsterCard }) {
+  return (
+    <>
+      <div className="flex justify-between">
+        <div className="flex items-center">
+          <Image
+            className="block mr-1"
+            src={`https://duelistmarketimages.s3.amazonaws.com/star.png`}
+            alt={`Level`}
+            width={20}
+            height={20}
+          />
+          <div className="font-bold text-xl font-mono">{props.card.level}</div>
+        </div>
+        <Image
+          src={`https://duelistmarketimages.s3.amazonaws.com/types/${props.card.monsterType}.webp`}
+          alt={`${(props.card as MonsterCard).monsterType} type monster.`}
+          width={40}
+          height={40}
+        />
+      </div>
+      <div className="flex justify-between">
+        <FontAwesomeIcon icon={faSwords} width={25} height={25} />
+        <div className="font-bold text-xl font-mono">{props.card.attack}</div>
+      </div>
+      <div className="flex justify-between">
+        <FontAwesomeIcon icon={faShield} width={25} height={25} />
+        <div className="font-bold text-xl font-mono">{props.card.defense}</div>
+      </div>
+    </>
   );
 }

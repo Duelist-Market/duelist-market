@@ -3,7 +3,6 @@ export type CardConstructorArguments = {
   name: string;
   type: CardType;
   description: string;
-  attribute: string;
   fullImageUrl: string;
   smallImageUrl: string;
 };
@@ -15,7 +14,6 @@ export default class Card {
   name: string;
   type: CardType;
   description: string;
-  attribute: string;
   fullImageUrl: string;
   smallImageUrl: string;
 
@@ -24,7 +22,6 @@ export default class Card {
     name,
     type,
     description,
-    attribute,
     fullImageUrl,
     smallImageUrl,
   }: CardConstructorArguments) {
@@ -32,7 +29,6 @@ export default class Card {
     this.name = name;
     this.type = type;
     this.description = description;
-    this.attribute = attribute;
     this.fullImageUrl = fullImageUrl;
     this.smallImageUrl = smallImageUrl;
   }

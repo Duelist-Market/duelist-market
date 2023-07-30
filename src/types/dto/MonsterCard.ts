@@ -8,6 +8,7 @@ export type MonsterCardConstructorArguments = Omit<
   defense: number;
   level: number;
   monsterType: string;
+  attribute: string;
   subTypes: string[];
 };
 
@@ -17,6 +18,7 @@ export default class MonsterCard extends Card {
   level: number;
   monsterType: string;
   subTypes: string[];
+  attribute: string;
 
   constructor(args: MonsterCardConstructorArguments) {
     const {
@@ -38,7 +40,6 @@ export default class MonsterCard extends Card {
       name,
       type: "monster",
       description,
-      attribute,
       fullImageUrl,
       smallImageUrl,
     });
@@ -47,5 +48,6 @@ export default class MonsterCard extends Card {
     this.level = level;
     this.monsterType = monsterType;
     this.subTypes = subTypes;
+    this.attribute = attribute;
   }
 }

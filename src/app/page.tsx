@@ -2,6 +2,7 @@ import { Roboto, Black_Ops_One } from "next/font/google";
 
 import CardDetail from "@/components/CardDetail";
 import MonsterCard from "@/types/dto/MonsterCard";
+import SpellCard from "@/types/dto/SpellCard";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -29,6 +30,17 @@ const sampleMonster = new MonsterCard({
   smallImageUrl:
     "https://duelistmarketimages.s3.amazonaws.com/card_images/small/6511113.jpg",
   subTypes: ["xyz", "effect"],
+});
+
+const sampleSpell = new SpellCard({
+  id: 34541863,
+  name: '"A" Cell Breeding Device',
+  description:
+    "During each of your Standby Phases, put 1 A-Counter on 1 face-up monster your opponent controls.",
+  fullImageUrl:
+    "https://duelistmarketimages.s3.amazonaws.com/card_images/full/34541863.jpg",
+  smallImageUrl:
+    "https://duelistmarketimages.s3.amazonaws.com/card_images/small/34541863.jpg",
 });
 
 export default function Home() {
