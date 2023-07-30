@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 
 interface CardProps {
-  card: Card;
+  card?: Card;
 }
 
 const frameColors = {
@@ -29,6 +29,15 @@ export default function CardDetail(props: CardProps) {
   let attributeAlt = "";
   let subTypes: string[] = [];
 
+  if (!props.card) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <h1 className="font-sans text-xl block">
+          Select a card to view details
+        </h1>
+      </div>
+    );
+  }
   if (props.card.type === "monster") {
     const monsterCard = props.card as MonsterCard;
     attributeImage = `https://duelistmarketimages.s3.amazonaws.com/attributes/${monsterCard.attribute}.png`;
