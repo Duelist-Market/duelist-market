@@ -1,6 +1,7 @@
 import Card from "@/types/dto/Card";
 import MonsterCard from "@/types/dto/MonsterCard";
 import SpellCard from "@/types/dto/SpellCard";
+import TrapCard from "@/types/dto/TrapCard";
 import { faSwords, faShield } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -54,6 +55,11 @@ export default function CardDetail(props: CardProps) {
     attributeImage = `https://duelistmarketimages.s3.amazonaws.com/attributes/spell.svg`;
     attributeAlt = `Spell card.`;
     subTypes = ["Spell Card"];
+  } else {
+    bgColor = "bg-pink-600";
+    attributeImage = `https://duelistmarketimages.s3.amazonaws.com/attributes/trap.svg`;
+    attributeAlt = `Trap card.`;
+    subTypes = ["Trap Card"];
   }
 
   return (
@@ -138,6 +144,9 @@ function CardInfo(props: { card: Card }) {
       {props.card.type === "spell" ? (
         <SpellCardInfo card={props.card as SpellCard} />
       ) : null}
+      {props.card.type === "trap" ? (
+        <SpellCardInfo card={props.card as TrapCard} />
+      ) : null}
     </div>
   );
 }
@@ -175,44 +184,53 @@ function MonsterCardInfo(props: { card: MonsterCard }) {
   );
 }
 
-function SpellCardInfo(props: { card: SpellCard }) {
-  let spellType = "Normal Spell";
+function SpellCardInfo(props: { card: SpellCard | TrapCard }) {
+  let spellType = "Normal";
 
   switch (props.card.spellType) {
     case "quick-play":
-      spellType = "Quick-Play Spell";
+      spellType = "Quick-Play";
       break;
     case "field":
-      spellType = "Field Spell";
+      spellType = "Field";
       break;
     case "equip":
-      spellType = "Equip Spell";
+      spellType = "Equip";
       break;
     case "continuous":
-      spellType = "Continuous Spell";
+      spellType = "Continuous";
       break;
     case "ritual":
-      spellType = "Ritual Spell";
+      spellType = "Ritual";
       break;
+    case "counter":
+      spellType = "Counter";
     default:
-      spellType = "Normal Spell";
+      spellType = "Normal";
+  }
+
+  if (props.card.type === "trap") {
+    spellType = spellType + " Trap";
+  } else {
+    spellType = spellType + " Spell";
   }
 
   return (
     <div className="flex justify-between">
       <div className="flex items-center">
-        <Image
-          className="block mr-1"
-          src={`https://duelistmarketimages.s3.amazonaws.com/attributes/${props.card.spellType}.webp`}
-          alt={`Level`}
-          width={30}
-          height={30}
-        />
+        {props.card.spellType === "normal" ? (
+          <div></div>
+        ) : (
+          <Image
+            className="block mr-1"
+            src={`https://duelistmarketimages.s3.amazonaws.com/attributes/${props.card.spellType}.webp`}
+            alt={`Level`}
+            width={30}
+            height={30}
+          />
+        )}
       </div>
-      <div className="font-bold text-xl font-mono">
-        {props.card.spellType[0].toUpperCase() + props.card.spellType.slice(1)}{" "}
-        {spellType}
-      </div>
+      <div className="font-bold text-xl font-mono">{spellType}</div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Roboto, Black_Ops_One } from "next/font/google";
 import CardDetail from "@/components/CardDetail";
 import MonsterCard from "@/types/dto/MonsterCard";
 import SpellCard from "@/types/dto/SpellCard";
+import TrapCard from "@/types/dto/TrapCard";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -44,13 +45,25 @@ const sampleSpell = new SpellCard({
     "https://duelistmarketimages.s3.amazonaws.com/card_images/small/34541863.jpg",
 });
 
+const sampleTrap = new TrapCard({
+  id: 62279055,
+  name: "Magic Cylinder",
+  description:
+    "When an opponent's monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+  spellType: "normal",
+  fullImageUrl:
+    "https://duelistmarketimages.s3.amazonaws.com/card_images/full/62279055.jpg",
+  smallImageUrl:
+    "https://duelistmarketimages.s3.amazonaws.com/card_images/small/62279055.jpg",
+});
+
 export default function Home() {
   return (
     <main
       className={`h-screen w-screen bg-black justify-center flex py-8 ${roboto.variable} ${blackOpsOne.variable}`}
     >
       <div className="border-gray-500 border-solid border-2 w-2/5 mr-2 h-full bg-blue-600/10">
-        <CardDetail card={sampleMonster} />
+        <CardDetail card={sampleTrap} />
       </div>
       <div className="border-gray-500 border-solid border-2 w-2/5 h-full bg-blue-600/10"></div>
     </main>
