@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model attribute {
+  name                           String @id @db.VarChar(50)
+  card_card_attributeToattribute card[] @relation("card_attributeToattribute")
+}
+
+model card {
+  id                                           Int            @id
+  name                                         String         @unique @db.VarChar(255)
+  card_type                                    String         @db.VarChar(50)
+  description                                  String         @db.VarChar(1000)
+  attack                                       Int?
+  defense                                      Int?
+  level                                        Int?
+  monster_type                                 String?        @db.VarChar(50)
+  attribute                                    String         @db.VarChar(50)
+  full_image_url                               String         @db.VarChar(255)
+  small_image_url                              String         @db.VarChar(255)
+  attribute_card_attributeToattribute          attribute      @relation("card_attributeToattribute", fields: [attribute], references: [name], onDelete: NoAction, onUpdate: NoAction)
+  card_type_card_card_typeTocard_type          card_type      @relation("card_card_typeTocard_type", fields: [card_type], references: [name], onDelete: NoAction, onUpdate: NoAction)
+  monster_type_card_monster_typeTomonster_type monster_type?  @relation("card_monster_typeTomonster_type", fields: [monster_type], references: [name], onDelete: NoAction, onUpdate: NoAction)
+  card_subtype                                 card_subtype[]
+}
+
+model card_subtype {
+  card_id                               Int
+  subtype                               String  @db.VarChar(50)
+  card                                  card    @relation(fields: [card_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "card_sub_type_card_id_fkey")
+  subtype_card_subtype_subtypeTosubtype subtype @relation("card_subtype_subtypeTosubtype", fields: [subtype], references: [name], onDelete: NoAction, onUpdate: NoAction, map: "card_sub_type_sub_type_fkey")
+
+  @@id([card_id, subtype], map: "card_sub_type_pkey")
+}
+
+model card_type {
+  name                           String @id @db.VarChar(50)
+  card_card_card_typeTocard_type card[] @relation("card_card_typeTocard_type")
+}
+
+model monster_type {
+  name                                 String @id @db.VarChar(50)
+  card_card_monster_typeTomonster_type card[] @relation("card_monster_typeTomonster_type")
+}
+
+model subtype {
+  name                                       String         @id(map: "sub_type_pkey") @db.VarChar(50)
+  card_subtype_card_subtype_subtypeTosubtype card_subtype[] @relation("card_subtype_subtypeTosubtype")
+}
