@@ -1,5 +1,6 @@
 import Card from "@/types/dto/Card";
 import MonsterCard from "@/types/dto/MonsterCard";
+import SpellCard from "@/types/dto/SpellCard";
 import { faSwords, faShield } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -134,6 +135,9 @@ function CardInfo(props: { card: Card }) {
       {props.card.type === "monster" ? (
         <MonsterCardInfo card={props.card as MonsterCard} />
       ) : null}
+      {props.card.type === "spell" ? (
+        <SpellCardInfo card={props.card as SpellCard} />
+      ) : null}
     </div>
   );
 }
@@ -168,5 +172,47 @@ function MonsterCardInfo(props: { card: MonsterCard }) {
         <div className="font-bold text-xl font-mono">{props.card.defense}</div>
       </div>
     </>
+  );
+}
+
+function SpellCardInfo(props: { card: SpellCard }) {
+  let spellType = "Normal Spell";
+
+  switch (props.card.spellType) {
+    case "quick-play":
+      spellType = "Quick-Play Spell";
+      break;
+    case "field":
+      spellType = "Field Spell";
+      break;
+    case "equip":
+      spellType = "Equip Spell";
+      break;
+    case "continuous":
+      spellType = "Continuous Spell";
+      break;
+    case "ritual":
+      spellType = "Ritual Spell";
+      break;
+    default:
+      spellType = "Normal Spell";
+  }
+
+  return (
+    <div className="flex justify-between">
+      <div className="flex items-center">
+        <Image
+          className="block mr-1"
+          src={`https://duelistmarketimages.s3.amazonaws.com/attributes/${props.card.spellType}.webp`}
+          alt={`Level`}
+          width={30}
+          height={30}
+        />
+      </div>
+      <div className="font-bold text-xl font-mono">
+        {props.card.spellType[0].toUpperCase() + props.card.spellType.slice(1)}{" "}
+        {spellType}
+      </div>
+    </div>
   );
 }

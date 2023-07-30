@@ -37,6 +37,7 @@ const sampleSpell = new SpellCard({
   name: '"A" Cell Breeding Device',
   description:
     "During each of your Standby Phases, put 1 A-Counter on 1 face-up monster your opponent controls.",
+  spellType: "continuous",
   fullImageUrl:
     "https://duelistmarketimages.s3.amazonaws.com/card_images/full/34541863.jpg",
   smallImageUrl:
