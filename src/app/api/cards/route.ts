@@ -9,6 +9,10 @@ import TrapCard from "@/types/dto/TrapCard";
 export async function GET(request: NextRequest) {
   const name = request.nextUrl.searchParams.get("name");
   const page = request.nextUrl.searchParams.get("page") || "1";
+  const cardType = request.nextUrl.searchParams.get("cardType");
+  const monsterType = request.nextUrl.searchParams.get("monsterType");
+  const attribute = request.nextUrl.searchParams.get("attribute");
+  const subType = request.nextUrl.searchParams.get("subType");
 
   const query: Prisma.cardFindManyArgs = {
     orderBy: { name: "asc" },
@@ -20,7 +24,29 @@ export async function GET(request: NextRequest) {
   };
 
   if (name) {
-    query.where = { name: { contains: name, mode: "insensitive" } };
+    query.where = {
+      ...query.where,
+      name: { contains: name, mode: "insensitive" },
+    };
+  }
+
+  if (cardType) {
+    query.where = { ...query.where, card_type: cardType };
+  }
+
+  if (monsterType) {
+    query.where = { ...query.where, monster_type: monsterType };
+  }
+
+  if (attribute) {
+    query.where = { ...query.where, attribute: attribute };
+  }
+
+  if (subType) {
+    query.where = {
+      ...query.where,
+      card_subtype: { some: { subtype: subType } },
+    };
   }
 
   const numberOfResults = await prisma.card.count({ where: query.where });
