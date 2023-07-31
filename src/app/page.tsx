@@ -29,7 +29,10 @@ export default function Home() {
         <CardDetail card={selectedCard} />
       </div>
       <div className="border-gray-500 border-solid border-2 w-2/5 h-full bg-blue-600/10 overflow-hidden">
-        <CardListing />
+        <CardListing
+          selectedCard={selectedCard}
+          setSelectedCard={setSelectedCard}
+        />
       </div>
     </main>
   );
